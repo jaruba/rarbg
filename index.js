@@ -41,7 +41,7 @@ module.exports = {
       if (!query.mode) {
         return reject('Invalid query object -- no search mode')
       } else if (query.mode === 'search') {
-        if (!query.search_string &&
+        if (typeof query.search_string == 'undefined' &&
             !query.search_themoviedb &&
             !query.search_tvdb &&
             !query.search_imdb) {
@@ -122,6 +122,7 @@ module.exports = {
 
   sendRequest(query) {
     return new Promise((resolve, reject) => {
+      if (typeof query.search_string !== 'undefined' && !query.search_string) delete query.search_string
       const req = {
         host: config.host,
         path: config.path + querystring.stringify(query)
