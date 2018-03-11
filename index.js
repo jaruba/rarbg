@@ -66,6 +66,9 @@ module.exports = {
       this._setting_token = false
       this.tokenTimestamp = moment()
     })
+    .catch(e => {
+      throw e
+    })
   },
 
   getToken() {
@@ -114,8 +117,12 @@ module.exports = {
                 else
                   reject(results)
               })
-              .catch(e => reject(e))
+              .catch(e => {
+                reject(e)
+              })
           }, delay > 0 ? delay : 0)
+        }).catch(e => {
+          reject(e)
         })
     })
   },
@@ -144,6 +151,8 @@ module.exports = {
           reject(e)
         })
 
+      }).on('error', e => {
+        reject(e)
       })
     })
   }
