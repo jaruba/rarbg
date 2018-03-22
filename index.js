@@ -119,6 +119,9 @@ module.exports = class RarbgApi {
   sendRequest (query) {
     return new Promise((resolve, reject) => {
       if (typeof query.search_string !== 'undefined' && !query.search_string) delete query.search_string
+
+      query.app_id = 'couchpotato'
+
       const req = {
         host: this.config.host,
         path: this.config.path + stringify(query)
